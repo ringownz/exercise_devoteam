@@ -6,7 +6,7 @@ authors = ["Joao Ribeiro <joao.martins.ribeiro@devoteam.com>"]
 readme = "README.md"
 packages = [
     {include = "./src/"},
-    {include = "./tests/"},
+#    {include = "./tests/"},
 ]
 
 [tool.poetry.dependencies]

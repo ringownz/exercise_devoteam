@@ -1,0 +1,9 @@
+https://blog.stackademic.com/how-to-build-a-crud-api-using-fastapi-python-sqlite-for-new-coders-2d056333ea20
+
+
+poetry install
+poetry shell
+
+
+Run project:
+    poetry run uvicorn src.main:app --reload

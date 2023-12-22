@@ -1,6 +1,0 @@
-poetry install
-poetry shell
-
-
-Run project:
-    poetry run uvicorn src.main:app --reload
