@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "python-code-challenge-2021"
+version = "0.1.0"
+description = "code challenge By DEVOTEAM; done by João Ribeiro"
+authors = ["Joao Ribeiro <joao.martins.ribeiro@devoteam.com>"]
+readme = "README.md"
+packages = [
+    {include = "./src/"},
+    {include = "./tests/"},
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.105.0"
+uvicorn = "^0.25.0"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
