@@ -7,3 +7,33 @@ poetry shell
 
 Run project:
     poetry run uvicorn src.main:app --reload
+
+
+######### Docker stuff ##########
+
+Running SQLite with Docker Compose:
+
+docker-compose -f docker-compose-sqlite.yaml up -d
+
+
+
+### Tutorial docker
+
+transformar poetry > requirements.txt
+    poetry update
+    poetry export --without-hashes --format=requirements.txt > requirements.txt
+        foi preciso usar poetry install ......
+
+#  Criar imagem docker Build the docker image using the following command,
+docker build -t exercise_devoteam .
+
+#ver imagens
+docker images
+
+#To list the docker image status, use the following command,
+docker ps -a
+
+#Run the docker image using the following command,
+docker run -d -p 5000:8000 exercise_devoteam
+
+
