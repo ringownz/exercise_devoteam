@@ -5,17 +5,21 @@ import requests  # useless import when there's fastapi requests
 from ..model.Episode import Episode
 from ..repository import episodesRepository
 from ..utils import mapper
+from pathlib import Path
 
 url = 'https://www.omdbapi.com/?'
 
 
 def setup_url():
-    # f = open("apikey.json")
-    # data = json.load(f)
-    data = {
-        "title": "Game of Thrones",
-        "apikey": "76ecd78f"
-    }
+    path = Path(__file__).parent / ".." / ".." / "apikey.json"
+    with path.open() as f:
+        f = open(path)
+
+    data = json.load(f)
+    # data = {
+    #    "title": "Game of Thrones",
+    #    "apikey": "76ecd78f"
+    # }
     return url + 't=' + data['title'] + '&apikey=' + data['apikey']
 
 
@@ -47,6 +51,16 @@ def get_episodes():
 
 
 def get_episode_info(episode_id):
-    row = episodesRepository.get_episode(episode_id)
+    row = episodesRepository.get_episode_by_id(episode_id)
     data_to_user = mapper.show_user_from_db_by_id(row)  # data_to_user : id title rating S0X EX
     return data_to_user
+
+
+def filter_episodes_by_rating(season):
+    # Filter by season and rating > 8.8
+    listOfEpisodes = []
+    all_from_db = episodesRepository.get_episodes_by_rating(season)
+    for each in all_from_db:
+        listOfEpisodes.append(mapper.show_user_from_db_by_id(each))
+
+    return listOfEpisodes
