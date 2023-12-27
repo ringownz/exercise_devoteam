@@ -1,5 +1,6 @@
 import json
 import os
+import sqlite3
 
 import requests  # useless import when there's fastapi requests
 from ..model.Episode import Episode
@@ -24,6 +25,7 @@ def setup_url():
 
 
 def get_episodes():
+
     final_url = setup_url()
 
     # DONE: Make request to get nr seasons
@@ -40,7 +42,10 @@ def get_episodes():
             print("S" + str(season) + " E" + each["Episode"] + " : " + each["Title"])
             episode = Episode(each["imdbID"], each["Title"], each["Released"], season, each["Episode"])
             episode.set_rating(each["imdbRating"])
-            episodesRepository.create_episode(episode)  # Done: save info to DB
+            try:
+                episodesRepository.create_episode(episode)  # Done: save info to DB
+            except sqlite3.IntegrityError as e:
+                return f"Episodes with the same id already exist"
 
     listOfEpisodes = []
     all_from_db = episodesRepository.get_all_episodes()
@@ -50,8 +55,11 @@ def get_episodes():
     return listOfEpisodes
 
 
+
 def get_episode_info(episode_id):
     row = episodesRepository.get_episode_by_id(episode_id)
+    if row is None:
+        return f"Episode with id {episode_id} not found"
     data_to_user = mapper.show_user_from_db_by_id(row)  # data_to_user : id title rating S0X EX
     return data_to_user
 

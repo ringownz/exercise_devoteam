@@ -8,8 +8,10 @@ def create_comment(comment: Comment):
     cursor.execute('''INSERT INTO comments(episode_id, comment)
                     VALUES(?,?)''', (
         comment.episode_id, comment.comment))
+    id = cursor.lastrowid
     connection.commit()
     connection.close()
+    return id
 
 
 def get_all_comments(episode_id=None):
@@ -45,6 +47,8 @@ def update_comment(comment_id, episode_id, comment):
     cursor.execute('''UPDATE comments
     SET episode_id = ?, comment = ? WHERE id = ?'''
                    , (episode_id, comment, comment_id,))
+
+    cursor.execute('''SELECT * FROM comments WHERE id = ?''', (comment_id,))
     row = cursor.fetchone()
     connection.commit()
     connection.close()
