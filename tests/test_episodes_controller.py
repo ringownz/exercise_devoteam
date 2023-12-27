@@ -1,6 +1,8 @@
 import random
 
 from fastapi.testclient import TestClient
+
+from src import db_context
 from src.main import app
 
 client = TestClient(app)
