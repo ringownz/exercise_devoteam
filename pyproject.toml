@@ -6,16 +6,17 @@ authors = ["Joao Ribeiro <joao.martins.ribeiro@devoteam.com>"]
 readme = "README.md"
 packages = [
     {include = "./src/"},
-#    {include = "./tests/"},
+    {include = "./tests/"},
 ]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.105.0"
+fastapi = "^0.108.0"
 uvicorn = "^0.25.0"
 requests = "^2.31.0"
 pytest = "^7.4.3"
 poetry-plugin-export = "^1.6.0"
+httpx = "^0.26.0"
 
 
 [build-system]

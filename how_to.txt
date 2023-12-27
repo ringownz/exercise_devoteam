@@ -37,3 +37,6 @@ docker ps -a
 docker run -d -p 5000:8000 exercise_devoteam
 
 
+## run tests
+poetry run pytest
+
