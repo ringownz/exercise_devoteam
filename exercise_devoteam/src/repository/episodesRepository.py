@@ -1,3 +1,5 @@
+from sqlite3 import IntegrityError
+
 from src.model import Episode
 from src import db_context
 
@@ -5,11 +7,15 @@ from src import db_context
 def create_episode(episode: Episode):
     connection = db_context.new_connection()
     cursor = connection.cursor()
-    cursor.execute('''INSERT INTO episodes(imdb_id, title, released, episode, season, imdb_rating)
-                    VALUES(?,?,?,?,?,?)''', (
-        episode.imdb_id, episode.title, episode.released, episode.episode, episode.season, episode.imdb_rating))
-    connection.commit()
-    connection.close()
+    try:
+        cursor.execute('''INSERT INTO episodes(imdb_id, title, released, episode, season, imdb_rating)
+                        VALUES(?,?,?,?,?,?)''', (
+            episode.imdb_id, episode.title, episode.released, episode.episode, episode.season, episode.imdb_rating))
+    except IntegrityError:
+        print("UNIQUE KEY ALREADY EXISTS")
+    finally:
+        connection.commit()
+        connection.close()
 
 
 def get_episode_by_id(episode_id: str):

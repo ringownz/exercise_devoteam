@@ -38,14 +38,18 @@ def get_episodes():
         response_season_json = requests.get(url_each_season).json()
 
         list_episodes_each_season = response_season_json['Episodes']
-        for each in list_episodes_each_season:
-            print("S" + str(season) + " E" + each["Episode"] + " : " + each["Title"])
-            episode = Episode(each["imdbID"], each["Title"], each["Released"], season, each["Episode"])
-            episode.set_rating(each["imdbRating"])
-            try:
+
+        try:
+            for each in list_episodes_each_season:
+                print("S" + str(season) + " E" + each["Episode"] + " : " + each["Title"])
+                episode = Episode(each["imdbID"], each["Title"], each["Released"], season, each["Episode"])
+                episode.set_rating(each["imdbRating"])
+
                 episodesRepository.create_episode(episode)  # Done: save info to DB
-            except sqlite3.IntegrityError as e:
-                return f"Episodes with the same id already exist"
+        except sqlite3.IntegrityError as e:
+            print(f"Episodes with the same id already exist")
+            continue
+
 
     listOfEpisodes = []
     all_from_db = episodesRepository.get_all_episodes()
