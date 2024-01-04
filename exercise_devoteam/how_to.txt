@@ -34,7 +34,7 @@ docker images
 docker ps -a
 
 #Run the docker image using the following command,
-docker run -d -p 5000:8000 exercise_devoteam
+docker run -d -p 8000:8000 exercise_devoteam
 
 
 ## run tests

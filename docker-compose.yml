@@ -1,0 +1,31 @@
+version: '3.8'
+networks:
+  testnet:
+    driver: bridge
+services:
+  web:
+    build:
+      context: ./next_app
+      dockerfile: Dockerfile
+    container_name: web-container
+    environment:
+      DOCKER_STATUS_ENV: docker
+    ports:
+      - 3000:3000
+    volumes:
+      - ./next_app:/next_app
+    depends_on:
+      - back
+    networks:
+      - testnet
+  back:
+    build:
+      context: ./exercise_devoteam
+    container_name: back-container
+    ports:
+      - 8000:8000
+    volumes:
+      - ./exercise_devoteam:/exercise_devoteam
+    networks:
+      - testnet
+

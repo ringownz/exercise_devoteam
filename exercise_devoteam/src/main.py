@@ -29,7 +29,7 @@ app.include_router(commentsConnector.router, tags=["Comments"],
 
 @app.get("/", status_code=status.HTTP_200_OK)
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello": "World "}
 
 
 

@@ -1,0 +1,30 @@
+## Cria imagens, cria containers e inicializa-os
+
+docker compose up --build
+
+## Maneira de development menos produtiva
+### remover container, dar build imagem e voltar a criar container ..
+
+
+## Maneira de development apropriada
+### adicionar volumes   Tudo que for alterado em . é modificado em :/ e como se adiciona --reload ele da reset e atualiza
+
+docker-compose build --no-cache
+docker-compose rm -f
+docker-compose pull
+docker-compose up --build -d
+# Run some tests
+./tests
+docker-compose stop -t 1
+
+## By current official documentation there is a shortcut that stops and removes containers, networks, volumes, and images created by up, if they are already stopped or partially removed and so on, then it will do the trick too:
+docker-compose down
+
+## Then if you have new changes on your images or Dockerfiles use:
+docker-compose build --no-cache
+
+## Finally:
+docker-compose up
+
+## In one command: 
+docker-compose down && docker-compose build --no-cache && docker-compose up
